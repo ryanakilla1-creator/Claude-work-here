@@ -92,7 +92,7 @@ local content = make("Frame", {
     BackgroundTransparency = 1
 }, main)
 
-local pages = {}
+local crosshair, fovRing, fpsLabel, status, movementHint, floating\nlocal pages = {}
 local activePage
 local function newPage(name)
     local page = make("Frame", {Name = name, Size = UDim2.fromScale(1, 1),
@@ -164,60 +164,60 @@ end
 
 heading(combat, "Combat", "Painel demonstrativo: sem assistência automática de mira.")
 toggle(combat, "Mostrar dica de treino", false, function(on)
-    status.Visible = on
+    if status then status.Visible = on end
 end)
 
 heading(movement, "Movement", "Atalhos visuais locais; não alteram a velocidade do personagem.")
 toggle(movement, "Exibir indicador de movimento", false, function(on)
-    movementHint.Visible = on
+    if movementHint then movementHint.Visible = on end
 end)
 
 heading(sharp, "SHARP • Aim Trainer", "Ferramentas visuais para praticar sua própria mira.")
-toggle(sharp, "Crosshair na tela", true, function(on) crosshair.Visible = on end)
-toggle(sharp, "Anel visual de referência", false, function(on) fovRing.Visible = on end)
+toggle(sharp, "Crosshair na tela", true, function(on) if crosshair then crosshair.Visible = on end end)
+toggle(sharp, "Anel visual de referência", false, function(on) if fovRing then fovRing.Visible = on end end)
 
 heading(visual, "Visual", "Informações e elementos exibidos somente na sua tela.")
-toggle(visual, "Contador de FPS", true, function(on) fpsLabel.Visible = on end)
+toggle(visual, "Contador de FPS", true, function(on) if fpsLabel then fpsLabel.Visible = on end end)
 toggle(visual, "Mostrar status do treino", false, function(on) status.Visible = on end)
 
 heading(settings, "Settings", "Configurações da interface.")
-toggle(settings, "Botão flutuante PVP", true, function(on) floating.Visible = on end)
+toggle(settings, "Botão flutuante PVP", true, function(on) if floating then floating.Visible = on end end)
 toggle(settings, "Dica de movimento", false, function(on) movementHint.Visible = on end)
 
 -- HUDs locais.
-local crosshair = make("TextLabel", {Name = "Crosshair", AnchorPoint = Vector2.new(0.5, 0.5),
+crosshair = make("TextLabel", {Name = "Crosshair", AnchorPoint = Vector2.new(0.5, 0.5),
     Position = UDim2.fromScale(0.5, 0.5), Size = UDim2.fromOffset(30, 30),
     BackgroundTransparency = 1, Text = "+", Font = Enum.Font.GothamBold,
     TextSize = 26, TextColor3 = Color3.fromRGB(100, 255, 180)}, gui)
 
-local fovRing = make("Frame", {Name = "TrainingRing", AnchorPoint = Vector2.new(0.5, 0.5),
+fovRing = make("Frame", {Name = "TrainingRing", AnchorPoint = Vector2.new(0.5, 0.5),
     Position = UDim2.fromScale(0.5, 0.5), Size = UDim2.fromOffset(180, 180),
     BackgroundTransparency = 1, Visible = false}, gui)
 make("UICorner", {CornerRadius = UDim.new(1, 0)}, fovRing)
 make("UIStroke", {Color = Color3.fromRGB(100, 190, 255), Thickness = 1.5, Transparency = 0.2}, fovRing)
 
-local fpsLabel = make("TextLabel", {AnchorPoint = Vector2.new(1, 0),
+fpsLabel = make("TextLabel", {AnchorPoint = Vector2.new(1, 0),
     Position = UDim2.new(1, -14, 0, 14), Size = UDim2.fromOffset(100, 25),
     BackgroundColor3 = Color3.fromRGB(20, 24, 32), BackgroundTransparency = 0.15,
     Text = "FPS: --", Font = Enum.Font.GothamBold, TextSize = 12,
     TextColor3 = Color3.fromRGB(120, 255, 180)}, gui)
 make("UICorner", {CornerRadius = UDim.new(0, 6)}, fpsLabel)
 
-local status = make("TextLabel", {AnchorPoint = Vector2.new(0.5, 1),
+status = make("TextLabel", {AnchorPoint = Vector2.new(0.5, 1),
     Position = UDim2.new(0.5, 0, 1, -24), Size = UDim2.fromOffset(250, 28),
     BackgroundColor3 = Color3.fromRGB(20, 24, 32), Text = "Modo de treino local ativado",
     Font = Enum.Font.Gotham, TextSize = 11, TextColor3 = Color3.fromRGB(210, 230, 255),
     Visible = false}, gui)
 make("UICorner", {CornerRadius = UDim.new(0, 7)}, status)
 
-local movementHint = make("TextLabel", {AnchorPoint = Vector2.new(0, 1),
+movementHint = make("TextLabel", {AnchorPoint = Vector2.new(0, 1),
     Position = UDim2.new(0, 14, 1, -18), Size = UDim2.fromOffset(190, 25),
     BackgroundColor3 = Color3.fromRGB(20, 24, 32), Text = "Movimento: controle manual",
     Font = Enum.Font.Gotham, TextSize = 10, TextColor3 = Color3.fromRGB(220, 225, 240),
     Visible = false}, gui)
 make("UICorner", {CornerRadius = UDim.new(0, 6)}, movementHint)
 
-local floating = make("TextButton", {AnchorPoint = Vector2.new(1, 0.5),
+floating = make("TextButton", {AnchorPoint = Vector2.new(1, 0.5),
     Position = UDim2.new(1, -14, 0.5, 0), Size = UDim2.fromOffset(54, 54),
     BackgroundColor3 = Color3.fromRGB(80, 105, 210), Text = "PVP",
     Font = Enum.Font.GothamBold, TextSize = 13, TextColor3 = Color3.new(1, 1, 1)}, gui)
